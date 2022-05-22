@@ -44,7 +44,7 @@ class StorageServiceTest {
         given(storage.get(SAMPLE_FEATURE)).willReturn(sampleFeature());
 
         //when & then
-        assertThrows(IllegalStateException.class, () -> tested.create(SAMPLE_FEATURE));
+        assertThrows(FeatureAlreadyExists.class, () -> tested.create(SAMPLE_FEATURE));
         verify(storage, times(ZERO_TIMES)).save(any());
     }
 
@@ -66,7 +66,7 @@ class StorageServiceTest {
         given(storage.get(SAMPLE_FEATURE)).willReturn(null);
 
         //when & then
-        assertThrows(IllegalStateException.class, () -> tested.update(sampleFeature()));
+        assertThrows(FeatureNotFound.class, () -> tested.update(sampleFeature()));
         verify(storage, times(ZERO_TIMES)).save(any());
     }
 
@@ -121,7 +121,7 @@ class StorageServiceTest {
         given(storage.get(SAMPLE_FEATURE)).willReturn(null);
 
         //when & then
-        assertThrows(IllegalStateException.class, () -> tested.enable(SAMPLE_USER, SAMPLE_FEATURE));
+        assertThrows(FeatureNotFound.class, () -> tested.enable(SAMPLE_USER, SAMPLE_FEATURE));
         verify(storage, times(ZERO_TIMES)).enable(any(), any());
     }
 
@@ -143,7 +143,7 @@ class StorageServiceTest {
         given(storage.get(SAMPLE_FEATURE)).willReturn(null);
 
         //when & then
-        assertThrows(IllegalStateException.class, () -> tested.disable(SAMPLE_USER, SAMPLE_FEATURE));
+        assertThrows(FeatureNotFound.class, () -> tested.disable(SAMPLE_USER, SAMPLE_FEATURE));
         verify(storage, times(ZERO_TIMES)).disable(any(), any());
     }
 }

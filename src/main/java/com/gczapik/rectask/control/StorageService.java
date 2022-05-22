@@ -54,14 +54,14 @@ public class StorageService {
     private void validateIfNew(String featureName) {
         Optional<FeatureDTO> featureOptional = ofNullable(storage.get(featureName));
         if (featureOptional.isPresent()) {
-            throw new IllegalStateException("Feature with this name is already defined! Use PUT method to update it or pick a different name to create new one.");
+            throw new FeatureAlreadyExists();
         }
     }
 
     private void validateFeature(String featureName) {
         Optional<FeatureDTO> featureOptional = ofNullable(storage.get(featureName));
         if (!featureOptional.isPresent()) {
-            throw new IllegalStateException("Feature with this name does not exist! Use POST method to create it first.");
+            throw new FeatureNotFound();
         }
     }
 }
