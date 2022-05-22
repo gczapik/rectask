@@ -130,6 +130,7 @@ class FeaturesApiTest {
     @Test
     void enable_shouldReturnHttpOk() throws Exception {
         //given
+        given(storage.get(SAMPLE_FEATURE)).willReturn(sampleFeature());
 
         //when
         ResultActions resultActions = mockMvc.perform(put(BASE_PATH + "/" + ENABLE + "/" + SAMPLE_USER + "/" + SAMPLE_FEATURE));
@@ -141,6 +142,7 @@ class FeaturesApiTest {
     @Test
     void enable_shouldProccess() throws Exception {
         //given
+        given(storage.get(SAMPLE_FEATURE)).willReturn(sampleFeature());
 
         //when
         mockMvc.perform(put(BASE_PATH + "/" + ENABLE + "/" + SAMPLE_USER + "/" + SAMPLE_FEATURE));
@@ -152,6 +154,7 @@ class FeaturesApiTest {
     @Test
     void disable_shouldReturnHttpOk() throws Exception {
         //given
+        given(storage.get(SAMPLE_FEATURE)).willReturn(sampleFeature());
 
         //when
         ResultActions resultActions = mockMvc.perform(put(BASE_PATH + "/" + DISABLE + "/" + SAMPLE_USER + "/" + SAMPLE_FEATURE));
@@ -163,6 +166,7 @@ class FeaturesApiTest {
     @Test
     void disable_shouldProccess() throws Exception {
         //given
+        given(storage.get(SAMPLE_FEATURE)).willReturn(sampleFeature());
 
         //when
         mockMvc.perform(put(BASE_PATH + "/" + DISABLE + "/" + SAMPLE_USER + "/" + SAMPLE_FEATURE));

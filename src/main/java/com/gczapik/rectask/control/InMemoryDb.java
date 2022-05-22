@@ -49,7 +49,8 @@ public class InMemoryDb implements Storage {
 
     @Override
     public synchronized void disable(String username, String featureName) {
-        usersToFeatures.remove(username, featureName);
+        List<String> userFeatures = usersToFeatures.getOrDefault(username, new ArrayList<>());
+        userFeatures.remove(featureName);
     }
 
     @Override

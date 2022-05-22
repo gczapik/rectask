@@ -106,6 +106,7 @@ class StorageServiceTest {
     @Test
     void shouldEnable() {
         //given
+        given(storage.get(SAMPLE_FEATURE)).willReturn(sampleFeature());
 
         //when
         tested.enable(SAMPLE_USER, SAMPLE_FEATURE);
@@ -115,13 +116,34 @@ class StorageServiceTest {
     }
 
     @Test
+    void shouldNotEnableWhenNoFeature() {
+        //given
+        given(storage.get(SAMPLE_FEATURE)).willReturn(null);
+
+        //when & then
+        assertThrows(IllegalStateException.class, () -> tested.enable(SAMPLE_USER, SAMPLE_FEATURE));
+        verify(storage, times(ZERO_TIMES)).enable(any(), any());
+    }
+
+    @Test
     void shouldDisable() {
         //given
+        given(storage.get(SAMPLE_FEATURE)).willReturn(sampleFeature());
 
         //when
         tested.disable(SAMPLE_USER, SAMPLE_FEATURE);
 
         //then
         verify(storage).disable(SAMPLE_USER, SAMPLE_FEATURE);
+    }
+
+    @Test
+    void shouldNotDisableWhenNoFeature() {
+        //given
+        given(storage.get(SAMPLE_FEATURE)).willReturn(null);
+
+        //when & then
+        assertThrows(IllegalStateException.class, () -> tested.disable(SAMPLE_USER, SAMPLE_FEATURE));
+        verify(storage, times(ZERO_TIMES)).disable(any(), any());
     }
 }

@@ -25,7 +25,7 @@ public class StorageService {
     }
 
     public void update(FeatureDTO feature) {
-        validateIfExists(feature.getName());
+        validateFeature(feature.getName());
         storage.save(feature);
     }
 
@@ -42,24 +42,26 @@ public class StorageService {
     }
 
     public void enable(String username, String featureName) {
+        validateFeature(featureName);
         storage.enable(username, featureName);
     }
 
     public void disable(String username, String featureName) {
+        validateFeature(featureName);
         storage.disable(username, featureName);
     }
 
     private void validateIfNew(String featureName) {
         Optional<FeatureDTO> featureOptional = ofNullable(storage.get(featureName));
         if (featureOptional.isPresent()) {
-            throw new IllegalStateException("FeatureDTO with this name is already defined! Use PUT method to update it or pick a different name to create new one.");
+            throw new IllegalStateException("Feature with this name is already defined! Use PUT method to update it or pick a different name to create new one.");
         }
     }
 
-    private void validateIfExists(String featureName) {
+    private void validateFeature(String featureName) {
         Optional<FeatureDTO> featureOptional = ofNullable(storage.get(featureName));
         if (!featureOptional.isPresent()) {
-            throw new IllegalStateException("FeatureDTO with this name does not exist! Use POST method to create it first.");
+            throw new IllegalStateException("Feature with this name does not exist! Use POST method to create it first.");
         }
     }
 }
